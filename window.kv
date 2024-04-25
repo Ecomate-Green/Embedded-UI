@@ -1,0 +1,422 @@
+WindowManager:
+    FirstWindow:
+    SecondWindow:
+    ThirdWindow:
+    FourthWindow:
+    FifthWindow:
+    SixthWindow:
+    SeventhWindow:
+
+
+<FirstWindow>:
+    name: "first"
+    GridLayout:
+        size: root.width, root.height
+        cols: 2
+        canvas.before:
+            Color:
+                rgba: (1,1,1,1)
+            Rectangle:
+                source:"images/frame.png"
+                size: (1780,864)
+                pos: (70,68)
+        GridLayout:
+            rows: 3
+            FloatLayout:
+                Label:
+                    text: "Welcome to\nEcomate trash can! "
+                    color: (53/255, 121/255, 92/255,1)
+                    font_size: 60
+                    pos: (-110, 220)
+
+                Label:
+                    text: "This bin will automatically\nidentify and sort your\nwaste"
+                    color: (6/255, 15/255, 10/255, 1)
+                    font_size: 60
+                    pos: (-30, 10)
+
+                FloatLayout:
+                    Label:
+                        text:"Press"
+                        color: (250/255, 107/255, 122/255,1)
+                        font_size: 60
+                        pos:(-299,-180)
+                    FloatLayout:
+                        RoundedButton:
+                            text: "start"
+                            font_size: 60
+                            size: (335,125)
+                            pos: (280,250)
+                            size_hint: None,None
+                            on_release:
+                                app.root.current = "second"
+                                root.manager.transition.direction = "up"
+
+                    Label:
+                        text:"to begin!"
+                        color: (250/255, 107/255, 122/255,1)
+                        font_size: 60
+                        pos: (270,-180)
+        Image:
+            source: "images/start_window.png"
+
+<RoundedButton@Button>
+    background_color: (0,0,0,0)
+    background_normal:''
+    canvas.before:
+        Color:
+            rgba: (53/255, 121/255, 92/255,1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [74]
+
+
+<SecondWindow>:
+    name: "second"
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: (1,1,1,1)
+            Rectangle:
+                source:"images/frame.png"
+                size: (1780,864)
+                pos: (70,68)
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: -10
+            FloatLayout:
+                Image:
+                    source: "images/rec_frame.png"
+                    pos: (-110,500)
+
+                Image:
+                    id: rectangle
+                    source: "images/rectangle.png"
+                    background_color: (53/255, 121/255, 92/255,1)
+                    pos: (-35,500)
+
+            FloatLayout:
+                Label:
+                    text: "Door Opening"
+                    font_size: 70
+                    color: (53/255, 121/255, 92/255,1)
+                    pos: (-110,275)
+            FloatLayout:
+
+                Image:
+                    source:"images/point.png"
+                    pos: (-255,120)
+                Label:
+                    text: "WARNING\nBEWARE OF MOVING DOOR"
+                    font_size: 60
+                    color: (250/255, 107/255, 122/255,1)
+                    pos: (200,120)
+
+
+
+            Button:
+                text: "Play"
+                background_normal:''
+                font_size: 20
+                size: (200,39)
+                size_hint: (None,None)
+                on_release:
+                    app.animate_frame(rectangle)
+
+
+            Button:
+                text: "Next Screen"
+                font_size: 20
+                background_normal:''
+                size: (200,39)
+                size_hint: (None,None)
+                on_release:
+                    app.root.current = "third"
+                    root.manager.transition.direction = "down"
+
+
+<ThirdWindow>:
+    name: "third"
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: (1,1,1,1)
+            Rectangle:
+                source:"images/frame.png"
+                size: (1780,864)
+                pos: (70,68)
+        FloatLayout:
+            Image:
+                source:"images/bottle_frame.png"
+                pos_hint:{'center_y':0.65}
+
+
+            Image:
+                id: bottle
+                source: "images/bottle.png"
+                pos_hint: {'center_y':0.74}
+
+            Label:
+                text: "Please Insert item"
+                font_size: 70
+                color: (53/255, 121/255, 92/255,1)
+                pos_hint: {'center_x':0.48, 'center_y':0.42}
+
+            GridLayout:
+                cols:2
+                FloatLayout:
+                    Image:
+                        source:"images/small_point.png"
+                        pos_hint: {'center_x':0.72, 'center_y':0.32}
+                FloatLayout:
+                    Label:
+                        text:"insert One item at a time"
+                        font_size: 40
+                        color: (250/255, 107/255, 122/255,1)
+                        pos_hint: {'right':0.52, 'center_y':0.32}
+
+            RoundedButton:
+                text: "close door"
+                font_size: 60
+                size: (404,130)
+                pos_hint: {'center_x':0.49, 'y':0.13}
+                size_hint: None,None
+                on_release:
+                    app.root.current = "fourth"
+                    root.manager.transition.direction = "up"
+
+        Button:
+            text: "Play"
+            background_normal:''
+            font_size: 20
+            size: (200,65)
+            size_hint: (None,None)
+            on_release:
+                app.animate_frame2(bottle)
+
+<FourthWindow>:
+    name: "fourth"
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: (1,1,1,1)
+            Rectangle:
+                source:"images/frame.png"
+                size: (1780,864)
+                pos: (70,68)
+        GridLayout:
+            cols: 2
+            FloatLayout:
+                Label:
+                    text: "Do you have an account?"
+                    font_size: 70
+                    color: (53/255, 121/255, 92/255,1)
+                    pos_hint: {'center_x':0.6, 'center_y':0.65}
+                GridLayout:
+                    cols: 2
+                    FloatLayout:
+                        RoundedButton:
+                            text: "Yes"
+                            font_size: 60
+                            size: (275,130)
+                            pos_hint: {'center_x':0.76, 'y':0.35}
+                            size_hint: None,None
+                            hover_color: (250/255, 107/255, 122/255,1)
+                            on_release:
+                                self.background_color = self.hover_color
+                                app.root.current = "fifth"
+                                root.manager.transition.direction = "up"
+
+                    FloatLayout:
+                        RoundedButton:
+                            text: "No"
+                            font_size: 60
+                            size: (275,130)
+                            pos_hint: {'center_x':0.58, 'y':0.35}
+                            hover_color: (250/255, 107/255, 122/255,1)
+                            size_hint: None,None
+
+                            on_release:
+                                self.background_color = self.hover_color
+                                app.root.current = "seventh"
+                                root.manager.transition.direction = "up"
+
+            Image:
+                source: "images/man.png"
+
+<FifthWindow>:
+    name: "fifth"
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: (1,1,1,1)
+            Rectangle:
+                source:"images/frame.png"
+                size: (1780,864)
+                pos: (70,68)
+        FloatLayout:
+            Image:
+                source: "images/Qrcode.png"
+                pos_hint: {'right': 0.74}
+        FloatLayout:
+            Label:
+                text: "Scan this QR code to\nretrieve your reward"
+                font_size: 100
+                color: (53/255, 121/255, 92/255,1)
+                pos_hint: {'center_x': 0.64}
+            Image:
+                id: celebration
+                source:"images/celeb.png"
+                pos_hint: {'center_x': 0.64, 'y':0.87}
+        Button:
+            text: "Play"
+            background_normal:''
+            font_size: 20
+            size: (200,39)
+            size_hint: (None,None)
+            on_release:
+                app.animate_frame(celebration)
+
+        Button:
+            text: "Next Screen"
+            font_size: 20
+            background_normal:''
+            size: (200,39)
+            size_hint: (None,None)
+            on_release:
+                app.root.current = "sixth"
+                root.manager.transition.direction = "down"
+
+
+<SixthWindow>:
+    name: "sixth"
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: (1,1,1,1)
+            Rectangle:
+                source:"images/frame.png"
+                size: (1780,864)
+                pos: (70,68)
+        GridLayout:
+            cols: 2
+            spacing:-400
+            Image:
+                source:"images/thanks_girl.png"
+
+            Label:
+                text: "Thanks for\nusing me !"
+                font_size: 120
+                color: (53/255, 121/255, 92/255,1)
+
+        Button:
+            text: "first screen"
+            background_normal:''
+            font_size: 20
+            size: (200,65)
+            size_hint: (None,None)
+            on_release:
+                app.root.current = "first"
+                root.manager.transition.direction = "down"
+
+<SeventhWindow>:
+    name: "seventh"
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: (1,1,1,1)
+            Rectangle:
+                source:"images/frame.png"
+                size: (1780,864)
+                pos: (70,68)
+
+        GridLayout:
+            cols: 2
+            spacing: 1000
+            GridLayout:
+                rows: 3
+                spacing: -10
+                padding:100
+                FloatLayout:
+                    Label:
+                        text: "Enter your data"
+                        font_size: 80
+                        color: (53/255, 121/255, 92/255,1)
+                        pos_hint: {'x':0,'center_y': 0.1}
+                GridLayout:
+                    cols: 2
+                    GridLayout:
+                        cols:2
+                        spacing:-90
+                        CheckBox:
+                            color: (53/255, 121/255, 92/255,1)
+                            group: "send_data"
+                            on_active:root.checkbox_click(self, self.active, "Phone")
+                        Label:
+                            text: "Phone"
+                            color: (53/255, 121/255, 92/255,1)
+                            font_size: 60
+
+                    GridLayout:
+                        cols:2
+                        spacing:-100
+                        CheckBox:
+                            color: (53/255, 121/255, 92/255,1)
+                            group: "send_data"
+                            on_active:root.checkbox_click(self, self.active,"Email")
+                        Label:
+                            text: "Email"
+                            color: (53/255, 121/255, 92/255,1)
+                            font_size: 60
+                FloatLayout:
+                    GridLayout:
+                        cols:2
+                        spacing:60
+                        pos_hint: {'x':0.13, 'center_y': 0.65}
+                        TextInput:
+                            id: phone_num
+                            text: "Your Phone Number"
+                            halign: "left"
+                            font_size: 40
+                            size: (449,108)
+                            color: (142/255, 142/255, 147/255, 1)
+                            size_hint: None,None
+                            multiline: False
+                            background_color: (0,0,0,0)
+                            background_normal:''
+                            canvas:
+                                Color:
+                                    rgba: (142/255, 142/255, 147/255, 1)
+                                RoundedRectangle:
+                                    size: self.size
+                                    pos: self.pos
+                                    radius: [11.32]
+                        Button:
+                            id: send
+                            text: "Send"
+                            font_size: 40
+                            size: (335,108)
+                            size_hint: None,None
+                            background_color: (0,0,0,0)
+                            background_normal:''
+                            canvas.before:
+                                Color:
+                                    rgba: (53/255, 121/255, 92/255,1)
+                                RoundedRectangle:
+                                    size: self.size
+                                    pos: self.pos
+                                    radius: [11.32]
+                            on_press: root.on_press_button()
+                            on_release:
+                                app.root.current = "sixth"
+                                root.manager.transition.direction = "up"
+        FloatLayout:
+            Image:
+                source:"images/submit_girl.png"
+                pos_hint: {'center_x':0.8}
+
+
+
+
+
