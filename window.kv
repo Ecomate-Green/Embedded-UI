@@ -255,10 +255,22 @@ WindowManager:
                 source:"images/frame.png"
                 size: (1780,864)
                 pos: (70,68)
-        FloatLayout:
+        
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 10
+            size_hint: None, None
+            size: self.minimum_size  # Ensures BoxLayout adjusts to its content
+            pos_hint: {'center_x': 0.2, 'center_y': 0.5}
+            
             Image:
-                source: "images/Qrcode.png"
-                pos_hint: {'right': 0.74}
+                id: qr_code_image
+                source: ""
+                size_hint: (None, None)
+                size: (500, 500)
+                pos_hint: {'center_x':0.2, 'center_y':0.5}
+
+
         FloatLayout:
             Label:
                 text: "Scan this QR code to\nretrieve your reward"

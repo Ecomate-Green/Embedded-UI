@@ -3,6 +3,7 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
 from kivy.animation import Animation
+import qrcode
 
 #Window.size = (1440, 960)
 
@@ -27,7 +28,29 @@ class FourthWindow(Screen):
 
 
 class FifthWindow(Screen):
-    pass
+    def on_enter(self):
+        # Insert the actual API endpoint URL
+        api_url = "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=a"
+        
+        # Generate QR code
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=4,
+        )
+        qr.add_data(api_url)
+        qr.make(fit=True)
+        
+        # Create QR code image
+        qr_image = qr.make_image(fill_color="black", back_color="white")
+        
+        # Save QR code image to a file
+        qr_image_path = "qrcode.png"
+        qr_image.save(qr_image_path)
+        
+        # Set QR code image source in the Kivy Image widget
+        self.ids.qr_code_image.source = qr_image_path
 
 
 class SixthWindow(Screen):
