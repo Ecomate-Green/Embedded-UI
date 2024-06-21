@@ -1,11 +1,7 @@
 WindowManager:
 
-    ThirdWindow:
-    DropWindow
-    FourthWindow:
-    FifthWindow:
-    SixthWindow:
-    SeventhWindow:
+
+    LastWindow:
 
 
 <FirstWindow>:
@@ -327,3 +323,37 @@ WindowManager:
             text: "Seventh Window"
             font_size: 70
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+
+<LastWindow>:
+    name: "last"
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                source: "images/frame.png"
+                size: 1780, 864
+                pos: 70, 68
+
+        BoxLayout:
+            orientation: 'horizontal'
+            padding: 50
+            spacing: 50
+            Image:
+                source: "images/thanks_girl.png"  
+                size_hint: None, 1
+                width: 400
+                
+
+                
+            Label:
+                text: "Thanks for using me :)"
+                font_size: 60
+                color: 53/255, 121/255, 92/255, 1
+                size_hint: None, 1
+                width: 400
+                halign: 'center'
+                valign: 'middle'
+                pos: 70,90
+
