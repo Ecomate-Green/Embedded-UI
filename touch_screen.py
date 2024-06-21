@@ -4,7 +4,10 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
 from kivy.animation import Animation
 
-Window.size = (1440, 960)
+#Window.size = (1440, 960)
+
+
+Window.fullscreen = "auto"
 
 
 class FirstWindow(Screen):
