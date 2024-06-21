@@ -68,6 +68,8 @@ class SeventhWindow(Screen):
         phone = self.ids.phone_num.text
         print('phone:', phone)
 
+class LastWindow(Screen):
+    pass
 
 class WindowManager(ScreenManager):
     pass
