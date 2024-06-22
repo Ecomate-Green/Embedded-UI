@@ -50,7 +50,7 @@ WindowManager:
                             size_hint: None,None
                             on_release:
                                 app.root.current = "second"
-                                root.manager.transition.direction = "up"
+                                root.manager.transition.direction = "left"
 
                     Label:
                         text:"to begin!"
@@ -133,7 +133,7 @@ WindowManager:
                 size_hint: (None,None)
                 on_release:
                     app.root.current = "third"
-                    root.manager.transition.direction = "down"
+                    root.manager.transition.direction = "left"
 
 
 <ThirdWindow>:
@@ -184,7 +184,7 @@ WindowManager:
                 size_hint: None,None
                 on_release:
                     app.root.current = "fourth"
-                    root.manager.transition.direction = "up"
+                    root.manager.transition.direction = "left"
 
         Button:
             text: "Play"
@@ -226,7 +226,7 @@ WindowManager:
                             on_release:
                                 self.background_color = self.hover_color
                                 app.root.current = "fifth"
-                                root.manager.transition.direction = "up"
+                                root.manager.transition.direction = "left"
 
                     FloatLayout:
                         RoundedButton:
@@ -240,7 +240,7 @@ WindowManager:
                             on_release:
                                 self.background_color = self.hover_color
                                 app.root.current = "seventh"
-                                root.manager.transition.direction = "up"
+                                root.manager.transition.direction = "left"
 
             Image:
                 source: "images/man.png"
@@ -252,41 +252,66 @@ WindowManager:
             Color:
                 rgba: (1,1,1,1)
             Rectangle:
-                source:"images/frame.png"
-                size: (1780,864)
-                pos: (70,68)
-        FloatLayout:
+                source: "images/frame.png"
+                size: (1780, 864)
+                pos: (70, 68)
+        
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 10
+            size_hint: None, None
+            size: self.minimum_size  # Ensures BoxLayout adjusts to its content
+            pos_hint: {'center_x': 0.2, 'center_y': 0.5}
+
             Image:
-                source: "images/Qrcode.png"
-                pos_hint: {'right': 0.74}
+                id: qr_code_image
+                source: ""
+                size_hint: None, None
+                size: (500, 500)  # Adjust size as needed
+
         FloatLayout:
             Label:
                 text: "Scan this QR code to\nretrieve your reward"
                 font_size: 100
-                color: (53/255, 121/255, 92/255,1)
+                color: (53/255, 121/255, 92/255, 1)
                 pos_hint: {'center_x': 0.64}
+
             Image:
                 id: celebration
-                source:"images/celeb.png"
-                pos_hint: {'center_x': 0.64, 'y':0.87}
+                source: "images/celeb.png"
+                pos_hint: {'center_x': 0.64, 'y': 0.87}
+
         Button:
             text: "Play"
-            background_normal:''
+            background_normal: ''
             font_size: 20
-            size: (200,39)
-            size_hint: (None,None)
+            size: (200, 39)
+            size_hint: None, None
+            pos_hint: {'center_x': 0.64, 'y': 0.1}
             on_release:
                 app.animate_frame(celebration)
 
         Button:
             text: "Next Screen"
             font_size: 20
-            background_normal:''
-            size: (200,39)
-            size_hint: (None,None)
+            background_normal: ''
+            size: (200, 39)
+            size_hint: None, None
+            pos_hint: {'center_x': 0.64, 'y': 0.05}
             on_release:
                 app.root.current = "sixth"
-                root.manager.transition.direction = "down"
+                root.manager.transition.direction = "left"
+
+        Button:
+            text: "Back"
+            font_size: 20
+            background_normal: ''
+            size: (250, 39)
+            size_hint: None, None
+            pos_hint: {'center_x': 0.2, 'y': 0.05}
+            on_release:
+                app.root.current = "fourth"
+                root.manager.transition.direction = "right"
 
 
 <SixthWindow>:
@@ -318,7 +343,7 @@ WindowManager:
             size_hint: (None,None)
             on_release:
                 app.root.current = "first"
-                root.manager.transition.direction = "down"
+                root.manager.transition.direction = "left"
 
 <SeventhWindow>:
     name: "seventh"
@@ -410,11 +435,23 @@ WindowManager:
                             on_press: root.on_press_button()
                             on_release:
                                 app.root.current = "sixth"
-                                root.manager.transition.direction = "up"
+                                root.manager.transition.direction = "left"
         FloatLayout:
             Image:
                 source:"images/submit_girl.png"
                 pos_hint: {'center_x':0.8}
+
+
+        Button:
+            text: "Back"
+            font_size: 20
+            background_normal: ''
+            size: (250, 39)
+            size_hint: None, None
+            pos_hint: {'center_x': 0.2, 'y': 0.05}
+            on_release:
+                app.root.current = "fourth"
+                root.manager.transition.direction = "right"
 
 
 

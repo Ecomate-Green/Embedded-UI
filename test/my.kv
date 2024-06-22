@@ -1,8 +1,3 @@
-WindowManager:
-    FirstWindow:
-    SecondWindow:
-
-
 <FirstWindow>:
     name: "first"
     GridLayout:
@@ -11,9 +6,7 @@ WindowManager:
         padding: 50
         canvas.before:
             Color:
-                rgba: (1,1,1,1)
-            Rectangle:
-                source:"frame.png"
+                rgba: (1, 1, 1, 1)
         BoxLayout:
             orientation: 'vertical'
             padding: 20
@@ -31,43 +24,11 @@ WindowManager:
             RoundedButton:
                 text: "Next Screen"
                 font_size: 32
-                size: (340,130)
-                pos_hint: {'x': 0.30}
-                pos_hint: {'y': 0.27}
-                size_hint: (None,None)
+                size: (340, 130)
+                pos_hint: {'x': 0.30, 'y': 0.27}  # Combined pos_hint into one dictionary
+                size_hint: (None, None)
                 on_release:
                     app.root.current = "second"
                     root.manager.transition.direction = "up"
         Image:
             source: "start_window.png"
-
-
-<RoundedButton@Button>
-    background_color: (0,0,0,0)
-    background_normal:''
-    canvas.before:
-        Color:
-            rgba: (53/255, 121/255, 92/255,1)
-        RoundedRectangle:
-            size: self.size
-            pos: self.pos
-            radius: [74]
-
-
-
-<SecondWindow>:
-    name: "second"
-    BoxLayout:
-        orientation: "vertical"
-        size: root.width, root.height
-
-        Label:
-            text: "Second Screen"
-            font_size: 32
-
-        Button:
-            text: "Next Screen"
-            font_size: 32
-            on_release:
-                app.root.current = "first"
-                root.manager.transition.direction = "down"
