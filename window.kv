@@ -442,6 +442,18 @@ WindowManager:
                 pos_hint: {'center_x':0.8}
 
 
+        Button:
+            text: "Back"
+            font_size: 20
+            background_normal: ''
+            size: (250, 39)
+            size_hint: None, None
+            pos_hint: {'center_x': 0.2, 'y': 0.05}
+            on_release:
+                app.root.current = "fourth"
+                root.manager.transition.direction = "right"
+
+
 
 
 
