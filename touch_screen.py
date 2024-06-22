@@ -1,4 +1,5 @@
 from kivy.app import App
+from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -18,7 +19,6 @@ class FirstWindow(Screen):
 class SecondWindow(Screen):
     def on_enter(self):
         self.start_animation()
-        
 
     def start_animation(self):
         app = App.get_running_app()
@@ -28,6 +28,7 @@ class SecondWindow(Screen):
 
 class ThirdWindow(Screen):
     pass
+
 
 class DropWindow(Screen):
     pass
@@ -64,6 +65,12 @@ class FifthWindow(Screen):
 
 
 class SixthWindow(Screen):
+    def on_pre_enter(self):
+        Clock.schedule_once(self.switch_to_first_screen, 5)
+
+    def switch_to_first_screen(self, dt):
+        App.get_running_app().root.current = 'first'
+
     pass
 
 
@@ -135,6 +142,7 @@ class AwesomeApp(App):
     def animate_frame3(self, celebration, *args):
         anime = Animation(pos_hint={'center_y': 0.58}, t='in_quad')
         anime.start(celebration)
+
 
 if __name__ == '__main__':
     AwesomeApp().run()
