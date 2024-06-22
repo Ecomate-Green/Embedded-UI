@@ -18,6 +18,7 @@ class FirstWindow(Screen):
 class SecondWindow(Screen):
     def on_enter(self):
         self.start_animation()
+        
 
     def start_animation(self):
         app = App.get_running_app()
@@ -45,7 +46,7 @@ class FifthWindow(Screen):
         qr = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
-            box_size=10,
+            box_size=20,
             border=4,
         )
         qr.add_data(token)
@@ -95,12 +96,8 @@ kv = Builder.load_file('window.kv')
 
 class AwesomeApp(App):
     def build(self):
-
         Window.clearcolor = (1, 1, 1, 1)
-        
         sm = WindowManager()
-
-
         return kv
         
     def on_start(self):
@@ -112,11 +109,21 @@ class AwesomeApp(App):
 
     def animate_frame(self, *args):
         rectangle_anim = Animation(x=400, duration=3, opacity=0, t='linear')
-        rectangle_anim.bind(on_complete=self.switch_to_next_screen)
+        rectangle_anim.bind(on_complete=self.restart_animation)
         rectangle_anim.start(self.rectangle)
         bottle_anim = Animation(y=450, duration=3, t='linear')
-        bottle_anim.bind(on_complete=self.switch_to_next_screen)
+        bottle_anim.bind(on_complete=self.restart_animation)
         bottle_anim.start(self.my_bottle)
+
+    def restart_animation(self, animation, widget):
+        if self.root.current == 'second':
+            self.reset_animation()
+            self.animate_frame()
+
+    def reset_animation(self):
+        self.rectangle.pos = (-35, 500)
+        self.rectangle.opacity = 1
+        self.my_bottle.pos = (-35, 600)
 
     def switch_to_next_screen(self, *args):
         self.root.current = 'fourth'
@@ -128,7 +135,6 @@ class AwesomeApp(App):
     def animate_frame3(self, celebration, *args):
         anime = Animation(pos_hint={'center_y': 0.58}, t='in_quad')
         anime.start(celebration)
-
 
 if __name__ == '__main__':
     AwesomeApp().run()
