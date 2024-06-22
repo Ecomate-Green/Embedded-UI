@@ -120,25 +120,17 @@ WindowManager:
 
 
 
-            Button:
-                text: "Play"
-                background_normal:''
-                font_size: 20
-                size: (200,39)
-                size_hint: (None,None)
-                on_release:
-                    app.animate_frame()
-
-
-            Button:
-                text: "Next Screen"
-                font_size: 20
-                background_normal:''
-                size: (200,39)
-                size_hint: (None,None)
-                on_release:
-                    app.root.current = "fourth"
-                    root.manager.transition.direction = "left"
+        RoundedButton:
+            text: "Next"
+            font_size: 30
+            size: (270,49)
+            pos_hint: {'center_x':0.2, 'y':0.042}
+            size_hint: None,None
+            hover_color: (250/255, 107/255, 122/255,1)
+            on_release:
+                self.background_color = self.hover_color
+                app.root.current = "fourth"
+                root.manager.transition.direction = "right"
 
 
 <ThirdWindow>:
@@ -272,7 +264,8 @@ WindowManager:
                 id: qr_code_image
                 source: ""
                 size_hint: None, None
-                size: (500, 500)  # Adjust size as needed
+                size: (600, 600)  # Adjust size as needed
+                pos_hint: {'center_x': 0.5, 'center_y': 0.55}
 
         FloatLayout:
             Label:
