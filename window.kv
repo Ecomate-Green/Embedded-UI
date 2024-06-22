@@ -50,7 +50,7 @@ WindowManager:
                             size_hint: None,None
                             on_release:
                                 app.root.current = "second"
-                                root.manager.transition.direction = "up"
+                                root.manager.transition.direction = "left"
 
                     Label:
                         text:"to begin!"
@@ -133,7 +133,7 @@ WindowManager:
                 size_hint: (None,None)
                 on_release:
                     app.root.current = "third"
-                    root.manager.transition.direction = "down"
+                    root.manager.transition.direction = "left"
 
 
 <ThirdWindow>:
@@ -184,7 +184,7 @@ WindowManager:
                 size_hint: None,None
                 on_release:
                     app.root.current = "fourth"
-                    root.manager.transition.direction = "up"
+                    root.manager.transition.direction = "left"
 
         Button:
             text: "Play"
@@ -226,7 +226,7 @@ WindowManager:
                             on_release:
                                 self.background_color = self.hover_color
                                 app.root.current = "fifth"
-                                root.manager.transition.direction = "up"
+                                root.manager.transition.direction = "left"
 
                     FloatLayout:
                         RoundedButton:
@@ -240,7 +240,7 @@ WindowManager:
                             on_release:
                                 self.background_color = self.hover_color
                                 app.root.current = "seventh"
-                                root.manager.transition.direction = "up"
+                                root.manager.transition.direction = "left"
 
             Image:
                 source: "images/man.png"
@@ -265,9 +265,9 @@ WindowManager:
 
             Image:
                 id: qr_code_image
-                source: "images/Qrcode.png"
+                source: ""
                 size_hint: None, None
-                size: (400, 400)  # Adjust size as needed
+                size: (500, 500)  # Adjust size as needed
 
         FloatLayout:
             Label:
@@ -300,7 +300,7 @@ WindowManager:
             pos_hint: {'center_x': 0.64, 'y': 0.05}
             on_release:
                 app.root.current = "sixth"
-                root.manager.transition.direction = "down"
+                root.manager.transition.direction = "left"
 
         Button:
             text: "Back"
@@ -343,7 +343,7 @@ WindowManager:
             size_hint: (None,None)
             on_release:
                 app.root.current = "first"
-                root.manager.transition.direction = "down"
+                root.manager.transition.direction = "left"
 
 <SeventhWindow>:
     name: "seventh"
@@ -435,7 +435,7 @@ WindowManager:
                             on_press: root.on_press_button()
                             on_release:
                                 app.root.current = "sixth"
-                                root.manager.transition.direction = "up"
+                                root.manager.transition.direction = "left"
         FloatLayout:
             Image:
                 source:"images/submit_girl.png"
