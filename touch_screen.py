@@ -8,9 +8,13 @@ from screen_routing import ScreenRouter
 from kivy.uix.image import Image
 from kivy.clock import Clock
 from kivy.lang import Builder
+from kivy.properties import OptionProperty
+from kivy.factory import Factory
 import qrcode
 
-Window.fullscreen = 'auto'
+from responsive_screen import  KV
+
+#Window.fullscreen = 'auto'
 
 
 class StartScreen(Screen):
@@ -108,11 +112,115 @@ kv = Builder.load_file('window.kv')
 
 
 class EcomatePOS(App):
+    media = OptionProperty('M', options=('XS', 'S', 'M', 'L', 'XL'))
+
     def build(self):
         Window.clearcolor = (1, 1, 1, 1)
-        sm = WindowManager()
+        #self.sm = WindowManager()
+        #self.router = ScreenRouter(sm)
+
+        Window.bind(size=self.update_media)
+        #return Builder.load_string(KV)
+        
         return kv
         
+    def update_media(self, win, size):
+        width, height = size
+        self.media = (
+            'XS' if width < 250 else
+            'S' if width < 500 else
+            'M' if width < 1000 else
+            'L' if width < 1200 else
+            'XL'
+        )
+        self.apply_media_queries()
+
+    def apply_media_queries(self):
+        for screen in self.sm.screens:
+            self.apply_screen_media(screen)
+
+    def apply_screen_media(self, screen):
+        if isinstance(screen, StartScreen):
+            self.apply_start_screen(screen)
+        elif isinstance(screen, DisposeScreen):
+            self.apply_dispose_screen(screen)
+        elif isinstance(screen, ClassificationScreen):
+            self.apply_classification_screen(screen)
+        elif isinstance(screen, AccountScreen):
+            self.apply_account_screen(screen)
+        elif isinstance(screen, ScanScreen):
+            self.apply_scan_screen(screen)
+        elif isinstance(screen, ClosingScreen):
+            self.apply_closing_screen(screen)
+        elif isinstance(screen, SignUpScreen):
+            self.apply_sign_up_screen(screen)
+
+    def apply_start_screen(self, screen):
+
+        if self.media == 'XS':
+            screen.ids.label1.font_size = 30
+            screen.ids.label2.font_size = 30
+            screen.ids.button.size = (150, 50)
+        elif self.media == 'S':
+            screen.ids.label1.font_size = 40
+            screen.ids.label2.font_size = 40
+            screen.ids.button.size = (200, 60)
+        elif self.media == 'M':
+            screen.ids.label1.font_size = 50
+            screen.ids.label2.font_size = 50
+            screen.ids.button.size = (250, 70)
+        elif self.media == 'L':
+            screen.ids.label1.font_size = 60
+            screen.ids.label2.font_size = 60
+            screen.ids.button.size = (300, 80)
+        elif self.media == 'XL':
+            screen.ids.label1.font_size = 70
+            screen.ids.label2.font_size = 70
+            screen.ids.button.size = (350, 90)
+
+    def apply_dispose_screen(self, screen):
+        
+        if self.media == 'XS':
+            screen.ids.my_bottle.size_hint = (0.3, 0.3)
+            screen.ids.rectangle.size_hint = (0.3, 0.3)
+            screen.ids.warning_label.font_size = 30
+        elif self.media == 'S':
+            screen.ids.my_bottle.size_hint = (0.4, 0.4)
+            screen.ids.rectangle.size_hint = (0.4, 0.4)
+            screen.ids.warning_label.font_size = 40
+        elif self.media == 'M':
+            screen.ids.my_bottle.size_hint = (0.5, 0.5)
+            screen.ids.rectangle.size_hint = (0.5, 0.5)
+            screen.ids.warning_label.font_size = 50
+        elif self.media == 'L':
+            screen.ids.my_bottle.size_hint = (0.6, 0.6)
+            screen.ids.rectangle.size_hint = (0.6, 0.6)
+            screen.ids.warning_label.font_size = 60
+        elif self.media == 'XL':
+            screen.ids.my_bottle.size_hint = (0.7, 0.7)
+            screen.ids.rectangle.size_hint = (0.7, 0.7)
+            screen.ids.warning_label.font_size = 70
+
+    def apply_classification_screen(self, screen):
+        
+        pass
+
+    def apply_account_screen(self, screen):
+        
+        pass
+
+    def apply_scan_screen(self, screen):
+        
+        pass
+
+    def apply_closing_screen(self, screen):
+        
+        pass
+
+    def apply_sign_up_screen(self, screen):
+        
+        pass
+
     def on_start(self):
         self.set_id()
 
