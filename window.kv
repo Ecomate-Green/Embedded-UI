@@ -13,13 +13,15 @@ WindowManager:
     GridLayout:
         size: root.width, root.height
         cols: 2
+
         canvas.before:
             Color:
-                rgba: (1,1,1,1)
+                rgba: (1, 1, 1, 1)
             Rectangle:
-                source:"images/frame.png"
-                size: (1780,864)
-                pos: (70,50)
+                source: "images/frame.png"
+                size: (1780, 864) if app.media == 'XL' else (1280, 664)
+                pos: (70, 50) if app.media == 'XL' else (20, 10)
+
         GridLayout:
             rows: 3
             FloatLayout:
@@ -80,8 +82,8 @@ WindowManager:
                 rgba: (1,1,1,1)
             Rectangle:
                 source:"images/frame.png"
-                size: (1780,864)
-                pos: (70,68)
+                size: (1780, 864) if app.media == 'XL' else (1280, 664)
+                pos: (70, 68) if app.media == 'XL' else (20, 10)
         BoxLayout:
             orientation: 'vertical'
             spacing: -10
@@ -93,13 +95,15 @@ WindowManager:
                 Image:
                     id: my_bottle
                     source: "images/bottle.png"
-                    pos: (-35,600)
+                    size_hint: (0.5, 0.5) if app.media == 'M' else (0.4, 0.4)
+                    pos: (-35, 600) if app.media == 'XL' else (-20, 500)
 
                 Image:
                     id: rectangle
                     source: "images/rectangle.png"
                     background_color: (53/255, 121/255, 92/255,1)
-                    pos: (-35,500)
+                    size_hint: (0.5, 0.5) if app.media == 'M' else (0.4, 0.4)
+                    pos: (-35, 500) if app.media == 'XL' else (-20, 400)
 
             FloatLayout:
                 Label:
@@ -114,15 +118,15 @@ WindowManager:
                     pos: (-255,120)
                 Label:
                     text: "WARNING\nBEWARE OF MOVING DOOR"
-                    font_size: 60
+                    font_size: 60 if app.media == 'M' else 40
                     color: (250/255, 107/255, 122/255,1)
-                    pos: (200,120)
+                    pos: (200, 120) if app.media == 'XL' else (100, 80)
 
 
 
         RoundedButton:
             text: "Next"
-            font_size: 30
+            font_size: 30 if app.media == 'M' else 20
             size: (270,49)
             pos_hint: {'center_x':0.2, 'y':0.042}
             size_hint: None,None
