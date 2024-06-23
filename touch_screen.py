@@ -6,16 +6,18 @@ from kivy.core.window import Window
 from kivy.animation import Animation
 from screen_routing import ScreenRouter
 from kivy.uix.image import Image
+from kivy.clock import Clock
+from kivy.lang import Builder
 import qrcode
 
 Window.fullscreen = 'auto'
 
 
-class FirstWindow(Screen):
+class StartScreen(Screen):
     pass
 
 
-class SecondWindow(Screen):
+class DisposeScreen(Screen):
     def on_enter(self):
         self.start_animation()
         
@@ -26,18 +28,18 @@ class SecondWindow(Screen):
     pass
 
 
-class ThirdWindow(Screen):
+class ClassificationScreen(Screen):
     pass
 
 class DropWindow(Screen):
     pass
 
 
-class FourthWindow(Screen):
+class AccountScreen(Screen):
     pass
 
 
-class FifthWindow(Screen):
+class ScanScreen(Screen):
     def on_enter(self):
         # Insert the actual API endpoint URL
         token = "youssefabdelmottaleb"
@@ -63,28 +65,39 @@ class FifthWindow(Screen):
         self.ids.qr_code_image.source = qr_image_path
 
 
-class SixthWindow(Screen):
-    pass
+class ClosingScreen(Screen):
+    def on_enter(self):
+        # Schedule the return to the start screen after 3 s
+        Clock.schedule_once(self.go_to_start_screen, 3)
+
+    def go_to_start_screen(self, dt):
+        self.manager.current = "start"
+        self.manager.transition.direction = "left"
 
 
-class SeventhWindow(Screen):
+class SignUpScreen(Screen):
+    textbox = ObjectProperty(None)
 
-   textbox = ObjectProperty(None)
+    def on_enter(self):
+        self.select_email_checkbox()
 
-   def checkbox_click(self, instance, value, data_send):
-       data = data_send
-       print(data)
+    def select_email_checkbox(self):
+        self.ids.email_checkbox.active = True
 
-   def on_press_button(self):
-       phone = self.ids.textbox.text
-       print('phone:', phone)
+    def checkbox_click(self, instance, value, data_send):
+        data = data_send
+        print(data)
 
-   def update_text_input(self, checkbox, value, text_type):
-       if value:
-           if text_type == "Phone":
-               self.ids.textbox.text = "Enter Your Phone"
-           elif text_type == "Email":
-               self.ids.textbox.text = "Enter Your Email"
+    def on_press_button(self):
+        phone = self.ids.textbox.text
+        print('phone:', phone)
+
+    def update_text_input(self, checkbox, value, text_type):
+        if value:
+            if text_type == "Phone":
+                self.ids.textbox.text = "Enter Your Phone"
+            elif text_type == "Email":
+                self.ids.textbox.text = "Enter Your Email"
 
 
 class WindowManager(ScreenManager):
@@ -94,7 +107,7 @@ class WindowManager(ScreenManager):
 kv = Builder.load_file('window.kv')
 
 
-class AwesomeApp(App):
+class EcomatePOS(App):
     def build(self):
         Window.clearcolor = (1, 1, 1, 1)
         sm = WindowManager()
@@ -104,8 +117,8 @@ class AwesomeApp(App):
         self.set_id()
 
     def set_id(self):
-        self.rectangle = self.root.get_screen('second').ids.rectangle
-        self.my_bottle = self.root.get_screen('second').ids.my_bottle
+        self.rectangle = self.root.get_screen('dispose').ids.rectangle
+        self.my_bottle = self.root.get_screen('dispose').ids.my_bottle
 
     def animate_frame(self, *args):
         rectangle_anim = Animation(x=400, duration=3, opacity=0, t='linear')
@@ -116,7 +129,7 @@ class AwesomeApp(App):
         bottle_anim.start(self.my_bottle)
 
     def restart_animation(self, animation, widget):
-        if self.root.current == 'second':
+        if self.root.current == 'dispose':
             self.reset_animation()
             self.animate_frame()
 
@@ -126,7 +139,7 @@ class AwesomeApp(App):
         self.my_bottle.pos = (-35, 600)
 
     def switch_to_next_screen(self, *args):
-        self.root.current = 'fourth'
+        self.root.current = 'account'
 
     def animate_frame2(self, bottle, *args):
         anime = Animation(pos_hint={'center_y': 0.58}, t='in_quad')
@@ -137,4 +150,4 @@ class AwesomeApp(App):
         anime.start(celebration)
 
 if __name__ == '__main__':
-    AwesomeApp().run()
+    EcomatePOS().run()

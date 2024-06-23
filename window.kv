@@ -1,15 +1,15 @@
 WindowManager:
-    FirstWindow:
-    SecondWindow:
-#    ThirdWindow:
-    FourthWindow:
-    FifthWindow:
-    SixthWindow:
-    SeventhWindow:
+    StartScreen:
+    DisposeScreen:
+#    ClassificationScreen:
+    AccountScreen:
+    ScanScreen:
+    ClosingScreen:
+    SignUpScreen:
 
 
-<FirstWindow>:
-    name: "first"
+<StartScreen>:
+    name: "start"
     GridLayout:
         size: root.width, root.height
         cols: 2
@@ -49,7 +49,7 @@ WindowManager:
                             pos: (280,282)
                             size_hint: None,None
                             on_release:
-                                app.root.current = "second"
+                                app.root.current = "dispose"
                                 root.manager.transition.direction = "left"
 
                     Label:
@@ -72,8 +72,8 @@ WindowManager:
             radius: [74]
 
 
-<SecondWindow>:
-    name: "second"
+<DisposeScreen>:
+    name: "dispose"
     FloatLayout:
         canvas.before:
             Color:
@@ -129,12 +129,12 @@ WindowManager:
             hover_color: (250/255, 107/255, 122/255,1)
             on_release:
                 self.background_color = self.hover_color
-                app.root.current = "fourth"
-                root.manager.transition.direction = "right"
+                app.root.current = "account"
+                root.manager.transition.direction = "left"
 
 
-<ThirdWindow>:
-    name: "third"
+<ClassificationScreen>:
+    name: "classification"
     FloatLayout:
         canvas.before:
             Color:
@@ -180,7 +180,7 @@ WindowManager:
                 pos_hint: {'center_x':0.49, 'y':0.13}
                 size_hint: None,None
                 on_release:
-                    app.root.current = "fourth"
+                    app.root.current = "account"
                     root.manager.transition.direction = "left"
 
         Button:
@@ -192,8 +192,8 @@ WindowManager:
             on_release:
                 app.animate_frame2(bottle)
 
-<FourthWindow>:
-    name: "fourth"
+<AccountScreen>:
+    name: "account"
     FloatLayout:
         canvas.before:
             Color:
@@ -222,7 +222,7 @@ WindowManager:
                             hover_color: (250/255, 107/255, 122/255,1)
                             on_release:
                                 self.background_color = self.hover_color
-                                app.root.current = "fifth"
+                                app.root.current = "scan"
                                 root.manager.transition.direction = "left"
 
                     FloatLayout:
@@ -236,14 +236,14 @@ WindowManager:
 
                             on_release:
                                 self.background_color = self.hover_color
-                                app.root.current = "seventh"
+                                app.root.current = "sign_up"
                                 root.manager.transition.direction = "left"
 
             Image:
                 source: "images/man.png"
 
-<FifthWindow>:
-    name: "fifth"
+<ScanScreen>:
+    name: "scan"
     FloatLayout:
         canvas.before:
             Color:
@@ -281,7 +281,7 @@ WindowManager:
             pos_hint: {'center_x':0.63, 'y':0.23}
             size_hint: (None,None)
             on_release:
-                app.root.current = "sixth"
+                app.root.current = "closing"
                 root.manager.transition.direction = "left"
 
 
@@ -294,12 +294,12 @@ WindowManager:
             hover_color: (250/255, 107/255, 122/255,1)
             on_release:
                 self.background_color = self.hover_color
-                app.root.current = "fourth"
+                app.root.current = "account"
                 root.manager.transition.direction = "right"
 
 
-<SixthWindow>:
-    name: "sixth"
+<ClosingScreen>:
+    name: "closing"
     FloatLayout:
         canvas.before:
             Color:
@@ -319,18 +319,9 @@ WindowManager:
                 font_size: 120
                 color: (53/255, 121/255, 92/255,1)
 
-        RoundedButton:
-            text: "Return"
-            font_size: 40
-            size: (335,125)
-            pos_hint: {'center_x':0.69, 'y':0.20}
-            size_hint: (None,None)
-            on_release:
-                app.root.current = "first"
-                root.manager.transition.direction = "left"
 
-<SeventhWindow>:
-    name: "seventh"
+<SignUpScreen>:
+    name: "sign_up"
     FloatLayout:
         canvas.before:
             Color:
@@ -423,7 +414,7 @@ WindowManager:
                                     radius: [11.32]
                             on_press: root.on_press_button()
                             on_release:
-                                app.root.current = "sixth"
+                                app.root.current = "closing"
                                 root.manager.transition.direction = "left"
         FloatLayout:
             Image:
@@ -440,10 +431,5 @@ WindowManager:
             hover_color: (250/255, 107/255, 122/255,1)
             on_release:
                 self.background_color = self.hover_color
-                app.root.current = "fourth"
+                app.root.current = "account"
                 root.manager.transition.direction = "right"
-
-
-
-
-
