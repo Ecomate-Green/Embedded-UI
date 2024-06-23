@@ -2,23 +2,23 @@ class ScreenRouter:
     def __init__(self, screen_manager):
         self.screen_manager = screen_manager
 
-    def switch_to_first(self):
-        self.screen_manager.current = 'first'
+    def switch_to_start(self):
+        self.screen_manager.current = 'start'
 
-    def switch_to_second(self):
-        self.screen_manager.current = 'second'
+    def switch_to_dispose(self):
+        self.screen_manager.current = 'dispose'
 
-    def switch_to_third(self):
-        self.screen_manager.current = 'third'
+    def switch_to_classification(self):
+        self.screen_manager.current = 'classification'
 
-    def switch_to_fourth(self):
-        self.screen_manager.current = 'fourth'
+    def switch_to_account(self):
+        self.screen_manager.current = 'account'
 
-    def switch_to_fifth(self):
-        self.screen_manager.current = 'fifth'
+    def switch_to_scan(self):
+        self.screen_manager.current = 'scan'
 
-    def switch_to_sixth(self):
-        self.screen_manager.current = 'sixth'
+    def switch_to_closing(self):
+        self.screen_manager.current = 'closing'
 
-    def switch_to_seventh(self):
-        self.screen_manager.current = 'seventh'
+    def switch_to_sign_up(self):
+        self.screen_manager.current = 'sign_up'
