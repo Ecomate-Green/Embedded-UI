@@ -26,7 +26,7 @@ class DisposeScreen(Screen):
         super().__init__(**kwargs)
         self.image_capture = None
         self.token = os.environ.get("MACHINE_TOKEN")
-        self.server_url = f"{os.environ.get("SERVER_URL")}/api/v1/transaction/start"
+        self.server_url = f"{os.environ.get('SERVER_URL')}/api/v1/transaction/start"
         self.api_key = os.environ.get("API_KEY")
 
     def on_enter(self):
@@ -50,9 +50,13 @@ class DisposeScreen(Screen):
             ret, frame = self.image_capture.read_frame()
             if ret:
                 response = self.image_capture.send_image_to_server(frame, self.server_url, self.token, self.api_key)
-                print("Image sent to server, response:", response)
+                # # Debugging
+                # print("Image sent to server, response:", response)
+                # print("Image sent to server, response status code:", response.status_code)
+                # print("Response headers:", response.headers)
+                # print("Response content:", response.content)
                 if response.status_code == 200:
-                    transaction_token = response.json().get("transaction_token")
+                    transaction_token = response.json().get('data', {}).get('token')
                     app = App.get_running_app()
                     app.transaction_token = transaction_token
                 else:

@@ -19,8 +19,14 @@ class ImageCapture:
         # headers = {'Authorization': f'Bearer {token}'}
         # response = requests.post(url, files={"file": img_encoded.tobytes()}, headers=headers)
 
-        payload = {"image": img_encoded.tobytes(), "machine_token": token, "api_key": api_key}
-        response = requests.post(url, files=payload)
+        params = { 
+            "machine_token": token, 
+            "api_key": api_key
+        }
+        files = {
+            'image': ('image.jpg', img_encoded.tobytes(), 'image/jpeg')
+        }
+        response = requests.post(url, params=params, files=files)
         return response
 
     def release(self):
