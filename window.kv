@@ -128,6 +128,7 @@ WindowManager:
             size_hint: None,None
             hover_color: (250/255, 107/255, 122/255,1)
             on_release:
+                root.capture_image()
                 self.background_color = self.hover_color
                 app.root.current = "account"
                 root.manager.transition.direction = "left"

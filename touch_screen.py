@@ -9,23 +9,59 @@ from kivy.uix.image import Image
 from kivy.clock import Clock
 from kivy.lang import Builder
 import qrcode
+from dotenv import load_dotenv
+import os
+from image_capture.capture import ImageCapture
 
 Window.fullscreen = 'auto'
 
+load_dotenv()
 
 class StartScreen(Screen):
     pass
 
 
 class DisposeScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.image_capture = None
+        self.token = os.environ.get("MACHINE_TOKEN")
+        self.server_url = f"{os.environ.get("SERVER_URL")}/api/v1/transaction/start"
+        self.api_key = os.environ.get("API_KEY")
+
     def on_enter(self):
         self.start_animation()
-        
+        self.image_capture = ImageCapture()
+        Clock.schedule_interval(self.update_frame, 1.0/30.0)
+
+
+    def update_frame(self, dt):
+        if self.image_capture:
+            ret, frame = self.image_capture.read_frame()
+            if ret:
+                self.image_capture.show_frame(frame)    
 
     def start_animation(self):
         app = App.get_running_app()
         app.animate_frame()
-    pass
+
+    def capture_image(self):
+        if self.image_capture:
+            ret, frame = self.image_capture.read_frame()
+            if ret:
+                response = self.image_capture.send_image_to_server(frame, self.server_url, self.token, self.api_key)
+                print("Image sent to server, response:", response)
+                if response.status_code == 200:
+                    transaction_token = response.json().get("transaction_token")
+                    app = App.get_running_app()
+                    app.transaction_token = transaction_token
+                else:
+                    print("Failed to get transaction token")
+
+    def on_leave(self):
+        if self.image_capture:
+            self.image_capture.release()
+    
 
 
 class ClassificationScreen(Screen):
@@ -58,7 +94,7 @@ class ScanScreen(Screen):
         qr_image = qr.make_image(fill_color="black", back_color="white")
         
         # Save QR code image to a file
-        qr_image_path = "qrcode.png"
+        qr_image_path = "qrcodes/qrcode.png"
         qr_image.save(qr_image_path)
         
         # Set QR code image source in the Kivy Image widget

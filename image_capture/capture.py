@@ -1,4 +1,3 @@
-# image_capture.py
 import cv2
 import requests
 
@@ -10,7 +9,7 @@ class ImageCapture:
         ret, frame = self.capture.read()
         return ret, frame
 
-    def send_image_to_server(self, image, url, token):
+    def send_image_to_server(self, image, url, token, api_key):
         resized_image = cv2.resize(image, (256, 256))
         _, img_encoded = cv2.imencode('.jpg', resized_image, [int(cv2.IMWRITE_JPEG_QUALITY), 50])  # High compression
         # Check file size in bytes
@@ -20,7 +19,7 @@ class ImageCapture:
         # headers = {'Authorization': f'Bearer {token}'}
         # response = requests.post(url, files={"file": img_encoded.tobytes()}, headers=headers)
 
-        payload = {"file": img_encoded.tobytes(), "machine_token": token}
+        payload = {"image": img_encoded.tobytes(), "machine_token": token, "api_key": api_key}
         response = requests.post(url, files=payload)
         return response
 
