@@ -3,3 +3,4 @@ qrcode==7.4.2
 opencv-python
 kivymd
 requests
+python-dotenv
