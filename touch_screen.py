@@ -12,6 +12,7 @@ import qrcode
 from dotenv import load_dotenv
 import os
 from image_capture.capture import ImageCapture
+import requests
 
 Window.fullscreen = 'auto'
 
@@ -24,7 +25,7 @@ class DisposeScreen(Screen):
         super().__init__(**kwargs)
         self.image_capture = None
         self.token = os.environ.get("MACHINE_TOKEN")
-        self.server_url = f"{os.environ.get('SERVER_URL')}/api/v1/transaction/start"
+        self.url = f"{os.environ.get('SERVER_URL')}/api/v1/transaction/start"
         self.api_key = os.environ.get("API_KEY")
 
     def on_enter(self):
@@ -47,7 +48,7 @@ class DisposeScreen(Screen):
         if self.image_capture:
             ret, frame = self.image_capture.read_frame()
             if ret:
-                response = self.image_capture.send_image_to_server(frame, self.server_url, self.token, self.api_key)
+                response = self.image_capture.send_image_to_server(frame, self.url, self.token, self.api_key)
                 # # Debugging
                 # print("Image sent to server, response:", response)
                 # print("Image sent to server, response status code:", response.status_code)
@@ -73,6 +74,12 @@ class AccountScreen(Screen):
         self.manager.get_screen('scan').set_transaction_token(transaction_token)
         self.manager.current = "scan"
 
+    def no_button(self):
+        app = App.get_running_app()
+        transaction_token = app.transaction_token
+        self.manager.get_screen('sign_up').set_transaction_token(transaction_token)
+        self.manager.current = "sign_up"
+
 
 
 class ScanScreen(Screen):
@@ -89,42 +96,67 @@ class ScanScreen(Screen):
         )
         qr.add_data(self.token)
         qr.make(fit=True)
-        
         # Create QR code image
         qr_image = qr.make_image(fill_color="black", back_color="white")
-        
         # Save QR code image to a file
         qr_image_path = "qrcodes/qrcode.png"
         qr_image.save(qr_image_path)
-        
         # Set QR code image source in the Kivy Image widget
         self.ids.qr_code_image.source = qr_image_path
 
 
+
 class SignUpScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.token = ""
+        self.url = f"{os.environ.get('SERVER_URL')}/api/v1/transaction/confirm"
+        self.api_key = os.environ.get("API_KEY")
+
     textbox = ObjectProperty(None)
 
+    def set_transaction_token(self, token):
+        self.token = token
+
     def on_enter(self):
-        self.select_email_checkbox()
+        self.initialize_screen()
 
-    def select_email_checkbox(self):
+    def initialize_screen(self):
         self.ids.email_checkbox.active = True
-
-    def checkbox_click(self, instance, value, data_send):
-        data = data_send
-        print(data)
-
-    def on_press_button(self):
-        phone = self.ids.textbox.text
-        print('phone:', phone)
+        self.ids.phone_checkbox.active = False
+        self.ids.textbox.hint_text = "Enter Your Email"
 
     def update_text_input(self, checkbox, value, text_type):
         if value:
-            if text_type == "Phone":
-                self.ids.textbox.text = "Enter Your Phone"
-            elif text_type == "Email":
-                self.ids.textbox.text = "Enter Your Email"
+            self.ids.textbox.hint_text = f"Enter Your {text_type}"
 
+    def on_press_button(self):
+        text = self.ids.textbox.text
+        if text:
+            if self.ids.email_checkbox.active == True:
+                self.send_data_request(text, "user_email")
+            elif self.ids.phone_checkbox.active == True:
+                self.send_data_request(text, "user_phone")
+        else:
+            print("Please enter your text in the textbox.")
+
+    def send_data_request(self, data, data_type):
+        params = {
+            data_type: data,
+            "transaction_token": self.token,
+            "api_key": self.api_key
+        }
+        try:
+            response = requests.post(self.url, params=params)
+            # # Debugging
+            # print("Response status code:", response.status_code)
+            # print("Response headers:", response.headers)
+            print("Response content:", response.content)
+        except Exception as e:
+            print(f"An error occurred: {e}")
+        
+
+    
 
 class ClosingScreen(Screen):
     def on_enter(self):
@@ -134,6 +166,7 @@ class ClosingScreen(Screen):
     def go_to_start_screen(self, dt):
         self.manager.current = "start"
         self.manager.transition.direction = "left"
+
 
 
 
