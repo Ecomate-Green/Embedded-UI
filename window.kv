@@ -17,7 +17,7 @@ WindowManager:
             Color:
                 rgba: (1,1,1,1)
             Rectangle:
-                source:"images/frame.png"
+                source:"assets/images/frame.png"
                 size: (1780,864)
                 pos: (70,50)
         GridLayout:
@@ -58,7 +58,7 @@ WindowManager:
                         font_size: 60
                         pos: (270,-180)
         Image:
-            source: "images/start_window.png"
+            source: "assets/images/start_window.png"
 
 <RoundedButton@Button>
     background_color: (0,0,0,0)
@@ -79,7 +79,7 @@ WindowManager:
             Color:
                 rgba: (1,1,1,1)
             Rectangle:
-                source:"images/frame.png"
+                source:"assets/images/frame.png"
                 size: (1780,864)
                 pos: (70,68)
         BoxLayout:
@@ -87,17 +87,17 @@ WindowManager:
             spacing: -10
             FloatLayout:
                 Image:
-                    source: "images/rec_frame.png"
+                    source: "assets/images/rec_frame.png"
                     pos: (-110,500)
 
                 Image:
                     id: my_bottle
-                    source: "images/bottle.png"
+                    source: "assets/images/bottle.png"
                     pos: (-35,600)
 
                 Image:
                     id: rectangle
-                    source: "images/rectangle.png"
+                    source: "assets/images/rectangle.png"
                     background_color: (53/255, 121/255, 92/255,1)
                     pos: (-35,500)
 
@@ -110,7 +110,7 @@ WindowManager:
             FloatLayout:
 
                 Image:
-                    source:"images/point.png"
+                    source:"assets/images/point.png"
                     pos: (-255,120)
                 Label:
                     text: "WARNING\nBEWARE OF MOVING DOOR"
@@ -141,18 +141,18 @@ WindowManager:
             Color:
                 rgba: (1,1,1,1)
             Rectangle:
-                source:"images/frame.png"
+                source:"assets/images/frame.png"
                 size: (1780,864)
                 pos: (70,68)
         FloatLayout:
             Image:
-                source:"images/bottle_frame.png"
+                source:"assets/images/bottle_frame.png"
                 pos_hint:{'center_y':0.65}
 
 
             Image:
                 id: bottle
-                source: "images/bottle.png"
+                source: "assets/images/bottle.png"
                 pos_hint: {'center_y':0.74}
 
             Label:
@@ -165,7 +165,7 @@ WindowManager:
                 cols:2
                 FloatLayout:
                     Image:
-                        source:"images/small_point.png"
+                        source:"assets/images/small_point.png"
                         pos_hint: {'center_x':0.72, 'center_y':0.32}
                 FloatLayout:
                     Label:
@@ -200,7 +200,7 @@ WindowManager:
             Color:
                 rgba: (1,1,1,1)
             Rectangle:
-                source:"images/frame.png"
+                source:"assets/images/frame.png"
                 size: (1780,864)
                 pos: (70,68)
         GridLayout:
@@ -241,7 +241,7 @@ WindowManager:
                                 root.manager.transition.direction = "left"
 
             Image:
-                source: "images/man.png"
+                source: "assets/images/man.png"
 
 <ScanScreen>:
     name: "scan"
@@ -250,7 +250,7 @@ WindowManager:
             Color:
                 rgba: (1,1,1,1)
             Rectangle:
-                source: "images/frame.png"
+                source: "assets/images/frame.png"
                 size: (1780, 864)
                 pos: (70, 68)
         
@@ -306,14 +306,14 @@ WindowManager:
             Color:
                 rgba: (1,1,1,1)
             Rectangle:
-                source:"images/frame.png"
+                source:"assets/images/frame.png"
                 size: (1780,864)
                 pos: (70,68)
         GridLayout:
             cols: 2
             spacing:-400
             Image:
-                source:"images/thanks_girl.png"
+                source:"assets/images/thanks_girl.png"
 
             Label:
                 text: "Thanks for\nusing me !"
@@ -328,7 +328,7 @@ WindowManager:
             Color:
                 rgba: (1,1,1,1)
             Rectangle:
-                source:"images/frame.png"
+                source:"assets/images/frame.png"
                 size: (1780,864)
                 pos: (70,68)
 
@@ -419,7 +419,7 @@ WindowManager:
                                 root.manager.transition.direction = "left"
         FloatLayout:
             Image:
-                source:"images/submit_girl.png"
+                source:"assets/images/submit_girl.png"
                 pos_hint: {'center_x':0.8}
 
 
