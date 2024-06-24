@@ -17,8 +17,6 @@ Window.fullscreen = 'auto'
 
 load_dotenv()
 
-class StartScreen(Screen):
-    pass
 
 
 class DisposeScreen(Screen):
@@ -54,7 +52,7 @@ class DisposeScreen(Screen):
                 # print("Image sent to server, response:", response)
                 # print("Image sent to server, response status code:", response.status_code)
                 # print("Response headers:", response.headers)
-                # print("Response content:", response.content)
+                print("Response content:", response.content)
                 if response.status_code == 200:
                     transaction_token = response.json().get('data', {}).get('token')
                     app = App.get_running_app()
@@ -68,22 +66,20 @@ class DisposeScreen(Screen):
     
 
 
-class ClassificationScreen(Screen):
-    pass
-
-class DropWindow(Screen):
-    pass
-
-
 class AccountScreen(Screen):
-    pass
+    def yes_button(self):
+        app = App.get_running_app()
+        transaction_token = app.transaction_token
+        self.manager.get_screen('scan').set_transaction_token(transaction_token)
+        self.manager.current = "scan"
+
 
 
 class ScanScreen(Screen):
+    def set_transaction_token(self, token):
+        self.token = token
+
     def on_enter(self):
-        # Insert the actual API endpoint URL
-        token = "youssefabdelmottaleb"
-        
         # Generate QR code
         qr = qrcode.QRCode(
             version=1,
@@ -91,7 +87,7 @@ class ScanScreen(Screen):
             box_size=20,
             border=4,
         )
-        qr.add_data(token)
+        qr.add_data(self.token)
         qr.make(fit=True)
         
         # Create QR code image
@@ -103,16 +99,6 @@ class ScanScreen(Screen):
         
         # Set QR code image source in the Kivy Image widget
         self.ids.qr_code_image.source = qr_image_path
-
-
-class ClosingScreen(Screen):
-    def on_enter(self):
-        # Schedule the return to the start screen after 3 s
-        Clock.schedule_once(self.go_to_start_screen, 3)
-
-    def go_to_start_screen(self, dt):
-        self.manager.current = "start"
-        self.manager.transition.direction = "left"
 
 
 class SignUpScreen(Screen):
@@ -140,7 +126,27 @@ class SignUpScreen(Screen):
                 self.ids.textbox.text = "Enter Your Email"
 
 
+class ClosingScreen(Screen):
+    def on_enter(self):
+        # Schedule the return to the start screen after 3 s
+        Clock.schedule_once(self.go_to_start_screen, 3)
+
+    def go_to_start_screen(self, dt):
+        self.manager.current = "start"
+        self.manager.transition.direction = "left"
+
+
+
+class StartScreen(Screen):
+    pass
+
 class WindowManager(ScreenManager):
+    pass
+
+class ClassificationScreen(Screen):
+    pass
+
+class DropWindow(Screen):
     pass
 
 
