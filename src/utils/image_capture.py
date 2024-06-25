@@ -2,10 +2,31 @@ import cv2
 import requests
 
 class ImageCapture:
-    def __init__(self, device_index=0):
-        self.capture = cv2.VideoCapture(device_index)
+    def __init__(self, device_index=1):
+        # Attempt to open the specified device index
+        self.capture = cv2.VideoCapture(device_index, cv2.CAP_DSHOW)
+
+        # Check if the device is opened successfully
         if not self.capture.isOpened():
-            raise Exception("Could not open video device")
+            print(f"USB camera not found at index {device_index}, falling back to the default camera.")
+            # Attempt to open the default camera
+            self.capture = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+
+            # Raise an exception if the default camera also fails to open
+            if not self.capture.isOpened():
+                raise Exception("Could not open video device")
+        
+    def get_camera_index(self):
+        # Attempt to open the USB camera (usually at index 1)
+        usb_camera_index = 1
+        cap = cv2.VideoCapture(usb_camera_index)
+
+        if cap.isOpened():
+            print(f"Using USB camera at index {usb_camera_index}")
+            return usb_camera_index
+        else:
+            print(f"USB camera not found, falling back to laptop camera at index 0")
+            return 0  # Default to laptop camera
 
     def read_frame(self):
         ret, frame = self.capture.read()
