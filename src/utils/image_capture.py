@@ -1,16 +1,24 @@
 import cv2
 import requests
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 
 class ImageCapture:
     def __init__(self, device_index=1):
+        device = os.environ.get("DEVICE")
+        apiPreference = cv2.CAP_V4L2 if device == "rasp" else cv2.CAP_DSHOW
+
         # Attempt to open the specified device index
-        self.capture = cv2.VideoCapture(device_index, cv2.CAP_DSHOW)
+        self.capture = cv2.VideoCapture(device_index, apiPreference)
 
         # Check if the device is opened successfully
         if not self.capture.isOpened():
             print(f"USB camera not found at index {device_index}, falling back to the default camera.")
             # Attempt to open the default camera
-            self.capture = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+            self.capture = cv2.VideoCapture(0, apiPreference)
 
             # Raise an exception if the default camera also fails to open
             if not self.capture.isOpened():
