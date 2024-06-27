@@ -4,6 +4,8 @@ from kivy.app import App
 import os
 from src.utils.image_capture import ImageCapture
 from dotenv import load_dotenv
+from kivy.animation import Animation
+
 
 load_dotenv()
 
@@ -17,9 +19,35 @@ class DisposeScreen(Screen):
         self.api_key = os.environ.get("API_KEY")
 
     def on_enter(self):
-        self.start_animation()
+        self.set_id()
+        self.animate_frame()
         self.image_capture = ImageCapture()
-        Clock.schedule_interval(self.update_frame, 1.0/30.0)
+        # Clock.schedule_interval(self.update_frame, 1.0/30.0)
+
+
+    def set_id(self):
+        self.rectangle = self.ids.rectangle
+        self.my_bottle = self.ids.my_bottle
+
+    def animate_frame(self, *args):
+        rectangle_anim = Animation(x=400, duration=3, opacity=0, t='linear')
+        rectangle_anim.bind(on_complete=self.restart_animation)
+        rectangle_anim.start(self.rectangle)
+        bottle_anim = Animation(y=450, duration=3, t='linear')
+        bottle_anim.bind(on_complete=self.restart_animation)
+        bottle_anim.start(self.my_bottle)
+
+    def restart_animation(self, animation, widget):
+        if self.manager.current == 'dispose':
+            self.reset_animation()
+            self.animate_frame()
+
+
+    def reset_animation(self):
+        self.rectangle.pos = (-35, 500)
+        self.rectangle.opacity = 1
+        self.my_bottle.pos = (-35, 600)
+
 
 
     def update_frame(self, dt):
@@ -28,9 +56,6 @@ class DisposeScreen(Screen):
             if ret:
                 self.image_capture.show_frame(frame)    
 
-    def start_animation(self):
-        app = App.get_running_app()
-        app.animate_frame()
 
     def capture_image(self):
         if self.image_capture:
