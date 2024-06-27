@@ -1,0 +1,75 @@
+#:import A kivy.animation.Animation
+
+<StartScreen>:
+    name: "start"
+    GridLayout:
+        size: root.width, root.height
+        cols: 2
+        canvas.before:
+            Color:
+                rgba: (1,1,1,1)
+            Rectangle:
+                source:"assets/images/frame.png"
+                size: (root.width * 0.9, root.height * 0.9)
+                pos: (root.width * 0.05, root.height * 0.05)
+        GridLayout:
+            rows: 3
+            FloatLayout:
+                Label:
+                    text: "Welcome to\nEcomate trash can! "
+                    color: (53/255, 121/255, 92/255, 1)
+                    font_size: root.width * 0.05  # Dynamic font size
+                    size_hint: 0.8, 0.3
+                    pos_hint: {"center_x": 0.6, "center_y": 0.7}
+                    bold: True
+
+                Label:
+                    text: "This bin will automatically\nidentify and sort your\nwaste"
+                    color: (6/255, 15/255, 10/255, 1)
+                    font_size: root.width * 0.03  # Dynamic font size
+                    size_hint: 0.8, 0.3
+                    pos_hint: {"center_x": 0.5, "center_y": 0.4}
+
+                    
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint: 1, 0.5
+                    pos_hint: {"center_x": 0.65, "center_y": 0.35}
+                    spacing: root.width * 0.02
+                    Label:
+                        text: "Press"
+                        color: (250/255, 107/255, 122/255, 1)
+                        font_size: root.width * 0.04  # Dynamic font size
+                        size_hint: None, None
+                        size: self.texture_size
+
+                    RoundedButton:
+                        text: "start"
+                        font_size: root.width * 0.04  # Dynamic font size
+                        size_hint: 0.04, 0.15
+                        on_release:
+                            app.root.current = "dispose"
+                            root.manager.transition.direction = "left"
+
+                    Label:
+                        text: "to begin!"
+                        color: (250/255, 107/255, 122/255, 1)
+                        font_size: root.width * 0.04  # Dynamic font size
+                        size_hint: None, None
+                        size: self.texture_size
+        FloatLayout:
+            Image:
+                source: "assets/images/start_window.png"
+                size_hint: 0.65, 0.65
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+<RoundedButton@Button>
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: (53/255, 121/255, 92/255, 1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [15]  # Adjusted border radius
