@@ -19,10 +19,13 @@ class DisposeScreen(Screen):
         self.api_key = os.environ.get("API_KEY")
 
     def on_enter(self):
-        self.set_id()
-        self.animate_frame()
+        Clock.schedule_once(self.set_id_and_animate, 0.1)
         self.image_capture = ImageCapture()
         # Clock.schedule_interval(self.update_frame, 1.0/30.0)
+
+    def set_id_and_animate(self, *args):
+        self.set_id()
+        self.animate_frame()
 
 
     def set_id(self):
