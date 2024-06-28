@@ -1,0 +1,55 @@
+<AccountScreen>:
+    name: "account"
+    GridLayout:
+        size: root.width, root.height
+        cols: 2
+        canvas.before:
+            Color:
+                rgba: (1, 1, 1, 1)
+            Rectangle:
+                source: "assets/images/frame.png"
+                size: (root.width * 0.9, root.height * 0.9)
+                pos: (root.width * 0.05, root.height * 0.05)
+        GridLayout:
+            cols: 2
+            BoxLayout:
+                orientation: 'vertical'
+                padding: dp(20)
+                spacing: dp(20)
+                height: root.height * 0.3
+                FloatLayout:
+                    Label:
+                        text: "Do you have an account?"
+                        color: (53/255, 121/255, 92/255, 1)
+                        font_size: root.width * 0.045
+                        pos_hint: {"center_x": 0.66, "center_y": 0.37}
+                
+                FloatLayout:
+                    BoxLayout:
+                        spacing: dp(50)
+                        size_hint: (None, None)
+                        size: (root.width * 0.4, root.height * 0.1)
+                        pos_hint: {"center_x": 0.66, "center_y": 1}
+                        RoundedButton:
+                            text: "Yes"
+                            font_size: root.width * 0.04
+                            size_hint: (0.5, 1)
+                            on_release:
+                                self.background_color = self.hover_color
+                                root.yes_button()
+                                root.manager.transition.direction = "left"
+                        RoundedButton:
+                            text: "No"
+                            font_size: root.width * 0.04
+                            size_hint: (0.5, 1)
+                            on_release:
+                                self.background_color = self.hover_color
+                                root.no_button()
+                                root.manager.transition.direction = "left"
+        
+            FloatLayout:
+                Image:
+                    source: "assets/images/man.png"
+                    size_hint: 0.7, 0.7
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+               
