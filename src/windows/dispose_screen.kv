@@ -1,0 +1,96 @@
+
+<DisposeScreen>:
+    name: "dispose"
+    GridLayout:
+        size: root.width, root.height
+        cols: 2
+        canvas.before:
+            Color:
+                rgba: (1,1,1,1)
+            Rectangle:
+                source:"assets/images/frame.png"
+                size: (root.width * 0.9, root.height * 0.9)
+                pos: (root.width * 0.05, root.height * 0.05)
+        BoxLayout:
+            orientation: 'vertical'
+            
+            FloatLayout:
+                Image:
+                    source: "assets/images/rec_frame.png"
+                    pos_hint: {'center_x': 0.9, 'center_y': 0.65}
+
+                Image:
+                    id: rectangle
+                    source: "assets/images/rectangle.png"
+                    background_color: (53/255, 121/255, 92/255,1)
+                    size_hint: 0.75, 0.75
+                    pos_hint: {'center_x': 1, 'center_y': 0.65}
+
+                Image:
+                    id: my_bottle
+                    source: "assets/images/bottle.png"
+                    size_hint: 0.3, 0.3
+                    pos_hint: {'center_x': 0.9, 'center_y': 0.9}
+
+            Widget:
+                size_hint_y: None
+                height: dp(20)  # Add space between the content and the button
+
+                
+
+        FloatLayout:
+            
+            Label:
+                text: "Door Opening"
+                color: (53/255, 121/255, 92/255,1)
+                font_size: root.width * 0.05
+                size_hint: 0.1, 0.1
+                pos_hint: {'center_x': -0.1, "center_y": 0.45}
+
+            Widget:
+                size_hint_y: None
+                height: dp(20)  # Add space between the content and the button
+
+        
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint: None, None
+                size: self.minimum_size
+                pos_hint: {'center_x': 0, "center_y": 0.25}
+                
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint: None, None
+                    size: self.minimum_size
+
+                    Image:
+                        source: "assets/images/point.png"
+                        size_hint: None, None
+                        size: root.width * 0.06, root.width * 0.06  # Set size based on root width
+                        keep_ratio: True
+                        allow_stretch: True
+
+                    Label:
+                        text: "WARNING\nBEWARE OF MOVING DOOR"
+                        color: (250/255, 107/255, 122/255, 1)
+                        font_size: root.width * 0.03
+                        size_hint: None, None
+                        size: self.texture_size
+
+                Widget:
+                    size_hint_y: None
+                    height: dp(20)  # Add space between the content and the button
+
+                RoundedButton:
+                    text: "Next"
+                    font_size: root.width * 0.04  # Adjust font size proportionally
+                    size_hint: 0.5, None  # Width will be 50% of the parent, height will be fixed
+                    height: sp(40)
+                    hover_color: (250/255, 107/255, 122/255, 1)
+                    on_release:
+                        root.capture_image()
+                        app.animate_button(self)
+                        app.root.current = "account"
+                        root.manager.transition.direction = "left"
+                    pos_hint: {'center_x': 0.5}  # Center the button horizontally within the BoxLayout
