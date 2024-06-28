@@ -33,13 +33,15 @@ class DisposeScreen(Screen):
         self.my_bottle = self.ids.my_bottle
 
     def animate_frame(self, *args):
-        rectangle_anim = Animation(x=400, duration=3, opacity=0, t='linear')
-        rectangle_anim.bind(on_complete=self.restart_animation)
-        rectangle_anim.start(self.rectangle)
-        bottle_anim = Animation(y=450, duration=3, t='linear')
-        bottle_anim.bind(on_complete=self.restart_animation)
-        bottle_anim.start(self.my_bottle)
+        self.animate_widget(self.rectangle, {'pos_hint': {'center_x': 1.5}}, on_complete=self.restart_animation)
+        self.animate_widget(self.my_bottle, {'pos_hint': {'center_y': 0.6}}, on_complete=self.restart_animation)
 
+    def animate_widget(self, widget, anim_props, duration=2, t='out_quad', on_complete=None):
+        anim = Animation(**anim_props, duration=duration, t=t)
+        if on_complete:
+            anim.bind(on_complete=on_complete)
+        anim.start(widget)
+        
     def restart_animation(self, animation, widget):
         if self.manager.current == 'dispose':
             self.reset_animation()
@@ -47,10 +49,9 @@ class DisposeScreen(Screen):
 
 
     def reset_animation(self):
-        self.rectangle.pos = (-35, 500)
+        self.rectangle.pos_hint = {'center_x': 1, 'center_y': 0.65}
         self.rectangle.opacity = 1
-        self.my_bottle.pos = (-35, 600)
-
+        self.my_bottle.pos_hint = {'center_x': 0.9, 'center_y': 0.9}
 
 
     def update_frame(self, dt):
