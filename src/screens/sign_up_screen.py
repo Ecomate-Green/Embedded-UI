@@ -1,5 +1,6 @@
 from kivy.uix.screenmanager import Screen
 from kivy.properties import ObjectProperty
+from kivy.animation import Animation
 import os
 import requests
 from dotenv import load_dotenv
@@ -13,7 +14,7 @@ class SignUpScreen(Screen):
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.token = ""
+        self.token = None
         self.url = f"{os.environ.get('SERVER_URL')}/api/v1/transaction/confirm"
         self.api_key = os.environ.get("API_KEY")
 
@@ -22,7 +23,8 @@ class SignUpScreen(Screen):
         self.token = token
 
     def on_enter(self):
-        self.initialize_screen()
+        if self.token:
+            self.initialize_screen()
 
     def initialize_screen(self):
         self.ids.email_checkbox.active = True
@@ -33,6 +35,10 @@ class SignUpScreen(Screen):
         if value:
             self.ids.textbox.hint_text = f"Enter Your {text_type}"
 
+    def on_key_down(self, window, key, scancode, codepoint, modifier):
+        if key == 13:  # Enter key
+            self.on_press_button()
+
     def on_press_button(self):
         text = self.ids.textbox.text
         if text:
@@ -42,6 +48,8 @@ class SignUpScreen(Screen):
                 self.send_data_request(text, "user_phone")
         else:
             print("Please enter your text in the textbox.")
+        self.ids.textbox.text = ""
+        self.ids.textbox.hint_text = "Enter Your Email"
 
     def send_data_request(self, data, data_type):
         params = {

@@ -1,0 +1,117 @@
+<SignUpScreen>:
+    name: "sign_up"
+    GridLayout:
+        size: root.width, root.height
+        cols: 2
+        canvas.before:
+            Color:
+                rgba: (1, 1, 1, 1)
+            Rectangle:
+                source: "assets/images/frame.png"
+                size: (root.width * 0.9, root.height * 0.9)
+                pos: (root.width * 0.05, root.height * 0.05)
+
+        GridLayout:
+            cols: 2
+            BoxLayout:
+                orientation: 'vertical'
+                padding: dp(20)
+                spacing: dp(20)
+                height: root.height * 0.3
+                FloatLayout:
+                    Label:
+                        text: "Enter your data"
+                        color: (53/255, 121/255, 92/255, 1)
+                        font_size: root.width * 0.06
+                        pos_hint: {"center_x": 0.66, "center_y": 0.1}
+                
+                FloatLayout:
+                    GridLayout:
+                        cols: 2
+                        padding: dp(20)
+                        spacing: dp(20)
+                        pos_hint: {"center_x": 0.58, "center_y": 0.7}
+                        GridLayout:
+                            cols:2
+                            CheckBox:
+                                id: phone_checkbox
+                                color: (53/255, 121/255, 92/255,1)
+                                group: "send_data"
+                                disabled: True
+                                on_active: root.update_text_input(self, self.active, "Phone")
+                            Label:
+                                text: "Phone"
+                                color: (53/255, 121/255, 92/255,1)
+                                font_size: root.width * 0.04
+                        GridLayout:
+                            cols:2
+                            CheckBox:
+                                id: email_checkbox
+                                color: (53/255, 121/255, 92/255,1)
+                                group: "send_data"
+                                disabled: False
+                                on_active: root.update_text_input(self, self.active, "Email")
+                            Label:
+                                text: "Email"
+                                color: (53/255, 121/255, 92/255,1)
+                                font_size: root.width * 0.04
+                
+                FloatLayout:
+                    GridLayout:
+                        cols: 2
+                        padding: dp(20)
+                        spacing: dp(20)
+                        size_hint: (None, None)
+                        size: (root.width * 0.6, root.height * 0.11)
+                        pos_hint: {"center_x": 0.83, "center_y": 1.2}
+                        TextInput:
+                            id: textbox
+                            text: ""
+                            halign: "left"
+                            valign: "middle"
+                            font_size: root.width * 0.03
+                            size_hint: (3, 0.2)
+                            color: (142/255, 142/255, 147/255, 1)
+                            multiline: False
+                            background_color: (0,0,0,0)
+                            background_normal:''
+                            padding: [10, (self.height - self.line_height) / 2]
+                            on_focus: if self.focus: self.text = ""
+                            canvas.before:
+                                Color:
+                                    rgba: (0, 0, 0, 1)
+                                Line:
+                                    width: 1
+                                    rectangle: (self.x, self.y, self.width, self.height)
+                    
+                        RoundedButton:
+                            text: "Send"
+                            font_size: root.width * 0.04
+                            size_hint: (None, None)
+                            size: (root.width * 0.2, root.height * 0.11)
+                            #pos_hint: {'x': 0.1, 'y': 0.1}
+                            on_release:
+                                root.on_press_button()
+                                app.root.current = "closing"
+                                root.manager.transition.direction = "left"
+
+                FloatLayout:
+                    RoundedButton:
+                        text: "Back"
+                        font_size: root.width * 0.04
+                        size_hint: (None, None)
+                        size: (root.width * 0.2, root.height * 0.05)
+                        pos_hint: {'x': 0.1, 'y': 0.1}
+                        on_release:
+                            self.background_color = self.hover_color
+                            app.root.current = "account"
+                            root.manager.transition.direction = "right"
+                
+
+            FloatLayout:
+                Image:
+                    source: "assets/images/submit_girl.png"
+                    size_hint: 0.7, 0.7
+                    pos_hint: {"center_x": 0.6, "center_y": 0.5}
+                    
+                    
