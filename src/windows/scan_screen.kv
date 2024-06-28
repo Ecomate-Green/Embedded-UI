@@ -1,0 +1,60 @@
+<ScanScreen>:
+    name: "scan"
+    GridLayout:
+        size: root.width, root.height
+        cols: 2
+        canvas.before:
+            Color:
+                rgba: (1, 1, 1, 1)
+            Rectangle:
+                source: "assets/images/frame.png"
+                size: (root.width * 0.9, root.height * 0.9)
+                pos: (root.width * 0.05, root.height * 0.05)
+        GridLayout:
+            cols: 2
+            BoxLayout:
+                orientation: 'vertical'
+                padding: dp(20)
+                spacing: dp(20)
+                FloatLayout:
+                    Image:
+                        id: qr_code_image
+                        source: ""
+                        size_hint: 1.2, 1.2
+                        pos_hint: {"center_x": 0.55, "center_y": 0.1}
+                
+                FloatLayout:
+                    RoundedButton:
+                        text: "Back"
+                        font_size: root.width * 0.04
+                        size_hint: (None, None)
+                        size: (root.width * 0.2, root.height * 0.05)
+                        pos_hint: {'x': 0.1, 'y': 0.1}
+                        on_release:
+                            self.background_color = self.hover_color
+                            app.root.current = "account"
+                            root.manager.transition.direction = "right"
+            BoxLayout:
+                orientation: 'vertical'
+                padding: dp(20)
+                spacing: dp(20)
+                FloatLayout:
+                    Label:
+                        text: "Scan this QR code to\nretrieve your reward"
+                        color: (53/255, 121/255, 92/255, 1)
+                        bold: True
+                        font_size: root.width * 0.05
+                        pos_hint: {"center_x": 0.35, "center_y": 0.2}
+                
+                FloatLayout:
+                    RoundedButton:
+                        text: "Next"
+                        font_size: root.width * 0.04
+                        size_hint: (None, None)
+                        size: (root.width * 0.3, root.height * 0.08)
+                        pos_hint: {"center_x": 0.35, "center_y": 0.7}
+                        on_release:
+                            self.background_color = self.hover_color
+                            root.yes_button()
+                            root.manager.transition.direction = "left"
+                        
