@@ -34,16 +34,18 @@
                             text: "Yes"
                             font_size: root.width * 0.04
                             size_hint: (0.5, 1)
+                            hover_color: (250/255, 107/255, 122/255,1)
                             on_release:
-                                self.background_color = self.hover_color
+                                app.animate_button(self)
                                 root.yes_button()
                                 root.manager.transition.direction = "left"
                         RoundedButton:
                             text: "No"
                             font_size: root.width * 0.04
                             size_hint: (0.5, 1)
+                            hover_color: (250/255, 107/255, 122/255,1)
                             on_release:
-                                self.background_color = self.hover_color
+                                app.animate_button(self)
                                 root.no_button()
                                 root.manager.transition.direction = "left"
         

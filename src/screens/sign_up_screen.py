@@ -10,7 +10,7 @@ load_dotenv()
 
 
 class SignUpScreen(Screen):
-    textbox = ObjectProperty(None)
+    send_button = ObjectProperty(None)
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -42,6 +42,7 @@ class SignUpScreen(Screen):
     def on_press_button(self):
         text = self.ids.textbox.text
         if text:
+            self.send_button.disabled = True  
             if self.ids.email_checkbox.active == True:
                 self.send_data_request(text, "user_email")
             elif self.ids.phone_checkbox.active == True:
@@ -67,6 +68,8 @@ class SignUpScreen(Screen):
             print(f"An error occurred: {e}")
             # Here you might want to provide feedback to the user in the UI
             self.show_error_popup(str(e))
+        finally:
+            self.send_button.disabled = False  # Enable the button again
 
     def show_error_popup(self, message):
         from kivy.uix.popup import Popup

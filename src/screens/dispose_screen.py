@@ -21,7 +21,7 @@ class DisposeScreen(Screen):
     def on_enter(self):
         Clock.schedule_once(self.set_id_and_animate, 0.1)
         self.image_capture = ImageCapture()
-        # Clock.schedule_interval(self.update_frame, 1.0/30.0)
+        Clock.schedule_interval(self.update_frame, 1.0/30.0)
 
     def set_id_and_animate(self, *args):
         self.set_id()

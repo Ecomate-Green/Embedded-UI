@@ -30,8 +30,9 @@
                         size_hint: (None, None)
                         size: (root.width * 0.2, root.height * 0.05)
                         pos_hint: {'x': 0.1, 'y': 0.1}
+                        hover_color: (250/255, 107/255, 122/255,1)
                         on_release:
-                            self.background_color = self.hover_color
+                            app.animate_button(self)
                             app.root.current = "account"
                             root.manager.transition.direction = "right"
             BoxLayout:
@@ -53,8 +54,9 @@
                         size_hint: (None, None)
                         size: (root.width * 0.3, root.height * 0.08)
                         pos_hint: {"center_x": 0.35, "center_y": 0.7}
+                        hover_color: (250/255, 107/255, 122/255,1)
                         on_release:
-                            self.background_color = self.hover_color
-                            root.yes_button()
+                            app.animate_button(self)
+                            app.root.current = "closing"
                             root.manager.transition.direction = "left"
                         

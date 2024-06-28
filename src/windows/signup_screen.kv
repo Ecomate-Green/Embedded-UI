@@ -1,5 +1,6 @@
 <SignUpScreen>:
     name: "sign_up"
+    send_button: send_button
     GridLayout:
         size: root.width, root.height
         cols: 2
@@ -85,13 +86,16 @@
                                     rectangle: (self.x, self.y, self.width, self.height)
                     
                         RoundedButton:
+                            id: send_button  # Add id reference
                             text: "Send"
                             font_size: root.width * 0.04
                             size_hint: (None, None)
                             size: (root.width * 0.2, root.height * 0.11)
                             #pos_hint: {'x': 0.1, 'y': 0.1}
+                            hover_color: (250/255, 107/255, 122/255,1)                        
+                            on_press: root.on_press_button()
                             on_release:
-                                root.on_press_button()
+                                app.animate_button(self)
                                 app.root.current = "closing"
                                 root.manager.transition.direction = "left"
 
@@ -102,11 +106,12 @@
                         size_hint: (None, None)
                         size: (root.width * 0.2, root.height * 0.05)
                         pos_hint: {'x': 0.1, 'y': 0.1}
+                        hover_color: (250/255, 107/255, 122/255,1)
                         on_release:
-                            self.background_color = self.hover_color
+                        on_release:
+                            app.animate_button(self)
                             app.root.current = "account"
                             root.manager.transition.direction = "right"
-                
 
             FloatLayout:
                 Image:

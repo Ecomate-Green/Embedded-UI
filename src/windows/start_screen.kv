@@ -47,7 +47,9 @@
                         text: "start"
                         font_size: root.width * 0.04  # Dynamic font size
                         size_hint: 0.04, 0.15
+                        hover_color: (250/255, 107/255, 122/255,1)
                         on_release:
+                            app.animate_button(self)
                             app.root.current = "dispose"
                             root.manager.transition.direction = "left"
 
