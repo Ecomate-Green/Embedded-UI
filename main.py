@@ -14,6 +14,8 @@ from kivy.animation import Animation
 from dotenv import load_dotenv
 from kivy.properties import OptionProperty, NumericProperty
 from kivy.metrics import sp
+from kivy.graphics import Color, RoundedRectangle
+
 
 # Window.fullscreen = 'auto'
 
@@ -29,6 +31,19 @@ class EcomatePOS(App):
         Window.clearcolor = (1, 1, 1, 1)
         sm = WindowManager()
         return kv
+
+    def animate_button(self, button):
+        original_color = button.background_color
+        anim = Animation(background_color=button.hover_color, duration=0.1) + \
+               Animation(background_color=original_color, duration=0.5)
+        
+        anim.bind(on_complete=lambda *args: self.reset_button_canvas(button))
+        anim.start(button)
+
+    def reset_button_canvas(self, button):
+        with button.canvas.before:
+            Color(rgba=(53/255, 121/255, 92/255, 1))
+            RoundedRectangle(size=button.size, pos=button.pos, radius=[10])
 
 if __name__ == '__main__':
     EcomatePOS().run()
