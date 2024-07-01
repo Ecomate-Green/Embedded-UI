@@ -31,6 +31,7 @@ class DisposeScreen(Screen):
             # raise EnvironmentError(error_msg)
 
         self.url = f"{self.url}/api/v1/transaction/start"
+        self.update_event = None
 
     def on_enter(self):
         try:
@@ -41,7 +42,7 @@ class DisposeScreen(Screen):
 
     def initialize_image_capture(self):
         self.image_capture = ImageCapture()
-        Clock.schedule_interval(self.update_frame, self.FRAME_INTERVAL)
+        self.update_event = Clock.schedule_interval(self.update_frame, 1.0 / 30.0)
 
     def set_id_and_animate(self, *args):
         self.set_id()
@@ -81,11 +82,17 @@ class DisposeScreen(Screen):
                     self.image_capture.show_frame(frame)
             except Exception as e:
                 handle_error("Error during update_frame", e)
+
+    def stop_update(self):
+        if self.update_event:
+            self.update_event.cancel()
+            self.update_event = None
     
     def capture_image_and_transition(self):
         self.capture_image()
         app = App.get_running_app()
         if hasattr(app, 'transaction_token') and app.transaction_token:
+            self.stop_update()
             self.manager.transition.direction = "left"
             self.manager.current = "account"
         else:
