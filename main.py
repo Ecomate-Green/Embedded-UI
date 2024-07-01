@@ -12,8 +12,6 @@ from src.screens.drop_window import DropWindow
 from kivy.uix.screenmanager import ScreenManager
 from kivy.animation import Animation
 from dotenv import load_dotenv
-from kivy.properties import OptionProperty, NumericProperty
-from kivy.metrics import sp
 from kivy.graphics import Color, RoundedRectangle
 
 
