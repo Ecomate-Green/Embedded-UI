@@ -5,28 +5,47 @@ import os
 from src.utils.image_capture import ImageCapture
 from dotenv import load_dotenv
 from kivy.animation import Animation
-
+import logging
+from src.utils import show_popup, handle_error
 
 load_dotenv()
-
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 class DisposeScreen(Screen):
+    FRAME_INTERVAL = 1.0 / 30.0
+
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.image_capture = None
-        self.token = os.environ.get("MACHINE_TOKEN")
-        self.url = f"{os.environ.get('SERVER_URL')}/api/v1/transaction/start"
-        self.api_key = os.environ.get("API_KEY")
+        self.token = os.getenv("MACHINE_TOKEN")
+        self.url = os.getenv('SERVER_URL')
+        self.api_key = os.getenv("API_KEY")
+
+        if not self.token or not self.url or not self.api_key:
+            error_msg = "Missing environment variables. Ensure MACHINE_TOKEN, SERVER_URL, and API_KEY are set."
+            logger.error(error_msg)
+            show_popup("Initialization Error", error_msg)
+            # raise EnvironmentError(error_msg)
+
+        self.url = f"{self.url}/api/v1/transaction/start"
 
     def on_enter(self):
-        Clock.schedule_once(self.set_id_and_animate, 0.1)
+        try:
+            Clock.schedule_once(self.set_id_and_animate, 0.1)
+            self.initialize_image_capture()
+        except Exception as e:
+            handle_error("Error during on_enter", e)
+
+    def initialize_image_capture(self):
         self.image_capture = ImageCapture()
-        Clock.schedule_interval(self.update_frame, 1.0/30.0)
+        Clock.schedule_interval(self.update_frame, self.FRAME_INTERVAL)
 
     def set_id_and_animate(self, *args):
         self.set_id()
         self.animate_frame()
-
 
     def set_id(self):
         self.rectangle = self.ids.rectangle
@@ -41,7 +60,7 @@ class DisposeScreen(Screen):
         if on_complete:
             anim.bind(on_complete=on_complete)
         anim.start(widget)
-        
+
     def restart_animation(self, animation, widget):
         if self.manager.current == 'dispose':
             self.reset_animation()
@@ -56,28 +75,44 @@ class DisposeScreen(Screen):
 
     def update_frame(self, dt):
         if self.image_capture:
-            ret, frame = self.image_capture.read_frame()
-            if ret:
-                self.image_capture.show_frame(frame)    
-
+            try:
+                ret, frame = self.image_capture.read_frame()
+                if ret:
+                    self.image_capture.show_frame(frame)
+            except Exception as e:
+                handle_error("Error during update_frame", e)
+    
+    def capture_image_and_transition(self):
+        self.capture_image()
+        app = App.get_running_app()
+        if hasattr(app, 'transaction_token') and app.transaction_token:
+            self.manager.transition.direction = "left"
+            self.manager.current = "account"
+        else:
+            show_popup("Error", "Failed to capture image or obtain transaction token.")
 
     def capture_image(self):
         if self.image_capture:
-            ret, frame = self.image_capture.read_frame()
-            if ret:
-                response = self.image_capture.send_image_to_server(frame, self.url, self.token, self.api_key)
-                # # Debugging
-                # print("Image sent to server, response:", response)
-                # print("Image sent to server, response status code:", response.status_code)
-                # print("Response headers:", response.headers)
-                print("Response content:", response.content)
-                if response.status_code == 200:
-                    transaction_token = response.json().get('data', {}).get('token')
-                    app = App.get_running_app()
-                    app.transaction_token = transaction_token
-                else:
-                    print("Failed to get transaction token")
+            try:
+                ret, frame = self.image_capture.read_frame()
+                if ret:
+                    response = self.image_capture.send_image_to_server(frame, self.url, self.token, self.api_key)
+                    self.handle_server_response(response)
+            except Exception as e:
+                handle_error("Error during capture_image", e)
+
+    def handle_server_response(self, response):
+        try:
+            transaction_token = response.json().get('data', {}).get('token')
+            app = App.get_running_app()
+            app.transaction_token = transaction_token
+        except Exception as e:
+            handle_error("Error", "Please check your connection with the server or your Enternet")
+
 
     def on_leave(self):
-        if self.image_capture:
-            self.image_capture.release()
+        try:
+            if self.image_capture:
+                self.image_capture.release()
+        except Exception as e:
+            handle_error("Error during on_leave", e)

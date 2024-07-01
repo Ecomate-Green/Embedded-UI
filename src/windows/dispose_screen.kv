@@ -88,9 +88,7 @@
                     size_hint: 0.5, None  # Width will be 50% of the parent, height will be fixed
                     height: sp(40)
                     hover_color: (250/255, 107/255, 122/255, 1)
-                    on_release:
-                        root.capture_image()
-                        app.animate_button(self)
-                        app.root.current = "account"
-                        root.manager.transition.direction = "left"
                     pos_hint: {'center_x': 0.5}  # Center the button horizontally within the BoxLayout
+                    on_release:
+                        root.capture_image_and_transition()
+                        app.animate_button(self)
