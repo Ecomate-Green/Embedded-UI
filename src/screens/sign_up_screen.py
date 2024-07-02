@@ -51,7 +51,7 @@ class SignUpScreen(Screen):
             print("Please enter your text in the textbox.")
         self.ids.textbox.text = ""
         self.ids.textbox.hint_text = "Enter Your Email"
-        self.capture_button.disabled = False
+        self.send_button.disabled = False
 
     def send_data_request(self, data, data_type):
         params = {
