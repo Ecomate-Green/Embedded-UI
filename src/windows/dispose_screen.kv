@@ -1,6 +1,7 @@
 
 <DisposeScreen>:
     name: "dispose"
+    capture_button: capture_button
     GridLayout:
         size: root.width, root.height
         cols: 2
@@ -39,56 +40,52 @@
                 
 
         FloatLayout:
-            
-            Label:
-                text: "Door Opening"
-                color: (53/255, 121/255, 92/255,1)
-                font_size: root.width * 0.05
-                size_hint: 0.1, 0.1
-                pos_hint: {'center_x': -0.1, "center_y": 0.45}
-
-            Widget:
-                size_hint_y: None
-                height: dp(20)  # Add space between the content and the button
-
-        
             BoxLayout:
                 orientation: 'vertical'
-                size_hint: None, None
-                size: self.minimum_size
-                pos_hint: {'center_x': 0, "center_y": 0.25}
-                
+                pos_hint: {'center_x': 0.5, "center_y": 0.15}
 
-                BoxLayout:
-                    orientation: 'horizontal'
-                    size_hint: None, None
-                    size: self.minimum_size
-
-                    Image:
-                        source: "assets/images/point.png"
-                        size_hint: None, None
-                        size: root.width * 0.06, root.width * 0.06  # Set size based on root width
-                        keep_ratio: True
-                        allow_stretch: True
-
+                FloatLayout:
                     Label:
-                        text: "WARNING\nBEWARE OF MOVING DOOR"
-                        color: (250/255, 107/255, 122/255, 1)
-                        font_size: root.width * 0.03
-                        size_hint: None, None
-                        size: self.texture_size
+                        text: "Door Opening"
+                        color: (53/255, 121/255, 92/255,1)
+                        font_size: root.width * 0.05
+                        size_hint: 0.1, 0.1
+                        pos_hint: {'center_x': -0.1, "center_y": 0.2}
 
                 Widget:
                     size_hint_y: None
                     height: dp(20)  # Add space between the content and the button
 
-                RoundedButton:
-                    text: "Next"
-                    font_size: root.width * 0.04  # Adjust font size proportionally
-                    size_hint: 0.5, None  # Width will be 50% of the parent, height will be fixed
-                    height: sp(40)
-                    hover_color: (250/255, 107/255, 122/255, 1)
-                    pos_hint: {'center_x': 0.5}  # Center the button horizontally within the BoxLayout
-                    on_release:
-                        root.capture_image_and_transition()
-                        app.animate_button(self)
+                FloatLayout:
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        size_hint: None, None
+                        size: self.minimum_size
+                        pos_hint: {'center_x': -0.1, "center_y": 1}
+
+                        Image:
+                            source: "assets/images/point.png"
+                            size_hint: None, None
+                            size: root.width * 0.06, root.width * 0.06  # Set size based on root width
+                            keep_ratio: True
+                            allow_stretch: True
+
+                        Label:
+                            text: "WARNING\nBEWARE OF MOVING DOOR"
+                            color: (250/255, 107/255, 122/255, 1)
+                            font_size: root.width * 0.03
+                            size_hint: None, None
+                            size: self.texture_size
+
+                FloatLayout:
+                    RoundedButton:
+                        id: capture_button
+                        text: "Next"
+                        font_size: root.width * 0.04
+                        size_hint: (None, None)
+                        size: (root.width * 0.2, root.height * 0.08)
+                        hover_color: (250/255, 107/255, 122/255, 1)
+                        pos_hint: {'center_x': -0.1, "center_y": 1.5}  # Center the button horizontally within the BoxLayout
+                        on_press: root.on_press_button()
+                        on_release:
+                            app.animate_button(self)

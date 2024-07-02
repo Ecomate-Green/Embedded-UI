@@ -41,7 +41,7 @@ class DisposeScreen(Screen):
 
     def initialize_image_capture(self):
         self.image_capture = ImageCapture()
-        Clock.schedule_interval(self.update_frame, self.FRAME_INTERVAL)
+        # Clock.schedule_interval(self.update_frame, self.FRAME_INTERVAL)
 
     def set_id_and_animate(self, *args):
         self.set_id()
@@ -108,6 +108,12 @@ class DisposeScreen(Screen):
             app.transaction_token = transaction_token
         except Exception as e:
             handle_error("Error", "Please check your connection with the server or your Enternet")
+
+    def on_press_button(self):
+        if self.image_capture:
+            self.capture_button.disabled = True  
+            self.capture_image_and_transition()
+            self.capture_button.disabled = False  
 
 
     def on_leave(self):
