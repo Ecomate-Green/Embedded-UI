@@ -1,3 +1,6 @@
+from kivy.config import Config
+Config.set('kivy', 'keyboard_mode', 'dock')
+
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.core.window import Window
